@@ -39,11 +39,11 @@
 |`X = pd.DataFrame(data_bunch.data, columns=data_bunch.feature_names)`|	Converts the feature data from a NumPy array to a Pandas DataFrame, using provided feature names. This is often good practice for better readability and manipulation.|
 |`from sklearn.model_selection import train_test_split`|	Importing Data Splitting Utility: Imports the primary function for splitting datasets into training and testing subsets.|
 |`X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)`|	Basic Train-Test Split: Splits the feature matrix X and target vector y into training and testing sets. test_size specifies the proportion of the dataset to include in the test split (e.g., 0.2 for 20%). random_state ensures reproducibility of the split.|
-|`test_size	(Parameter)`| A float between 0.0 and 1.0 (proportion of test set) or an int (absolute number of test samples).|
-|`train_size	(Parameter)`| A float between 0.0 and 1.0 (proportion of train set) or an int (absolute number of train samples). Default is complement of test_size.|
-|`random_state	(Parameter)`| An integer or RandomState instance. Used for shuffling the data before splitting. Passing an int fixes the shuffle order, ensuring the same split each time.|
-|`shuffle=True	(Parameter)`| Boolean, default True. Whether or not to shuffle the data before splitting. Generally keep True.|
-|`stratify=y	(Parameter)`| An array-like. If not None, data is split in a stratified fashion, using y as the class labels. This is crucial for classification tasks to maintain the same proportion of classes in train and test sets.|
+|`test_size`| 	(Parameter) A float between 0.0 and 1.0 (proportion of test set) or an int (absolute number of test samples).|
+|`train_size`|	(Parameter) A float between 0.0 and 1.0 (proportion of train set) or an int (absolute number of train samples). Default is complement of test_size.|
+|`random_state`|	(Parameter) An integer or RandomState instance. Used for shuffling the data before splitting. Passing an int fixes the shuffle order, ensuring the same split each time.|
+|`shuffle=True`|	(Parameter) Boolean, default True. Whether or not to shuffle the data before splitting. Generally keep True.|
+|`stratify=y`|	(Parameter) An array-like. If not None, data is split in a stratified fashion, using y as the class labels. This is crucial for classification tasks to maintain the same proportion of classes in train and test sets.|
 |`X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)`|	Splitting Features Only: If you only have features and no separate target variable, you can split X alone.|
 |`from sklearn.model_selection import KFold`|	Importing K-Fold Cross-Validation: Imports the class for K-Fold cross-validation, a technique for robust model evaluation.|
 |`kf = KFold(n_splits=5, shuffle=True, random_state=42)`|	Creates a KFold object to generate indices to split data into train/test sets. n_splits is the number of folds (e.g., 5-fold CV).|
