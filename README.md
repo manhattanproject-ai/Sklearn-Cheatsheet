@@ -53,3 +53,143 @@
 |`from sklearn.model_selection import StratifiedKFold`|	Importing Stratified K-Fold Cross-Validation: Imports the class for K-Fold cross-validation that preserves the percentage of samples for each class. Essential for imbalanced datasets.|
 |`skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`|	Creates a StratifiedKFold object. Similar to KFold but ensures class distribution.|
 |`for train_index, test_index in skf.split(X, y):`|	Iterates through the folds, using X and y to ensure stratification during the split.|
+
+## 3. Data Preprocessing & Transformation
+
+> This section covers the standard way to bring the NumPy library into your Python scripts.
+
+|Command | description|
+|----------|-------------|
+|`from sklearn.preprocessing import StandardScaler`|	Imports the StandardScaler for scaling features to a standard normal distribution (mean=0, variance=1).|
+|`scaler = StandardScaler()`|	Initializes the StandardScaler object.|
+|`scaled_data = scaler.fit_transform(X_train)`|	Fits the scaler to the training data X_train and then transforms it. This is the common step for fitting the transformation parameters (mean, std dev) only on the training data.|
+|`scaled_test_data = scaler.transform(X_test)`|	Transforms the test data X_test using the parameters learned from the training data. Never fit on test data.|
+|`from sklearn.preprocessing import MinMaxScaler`|	Imports the MinMaxScaler for scaling features to a given range (default: 0 to 1).|
+|`minmax_scaler = MinMaxScaler()`|	Initializes the MinMaxScaler object.|
+|`scaled_data = minmax_scaler.fit_transform(X)`|	Fits the MinMaxScaler to data X and transforms it, scaling features to the 0-1 range.|
+|`from sklearn.preprocessing import RobustScaler`|	Imports the RobustScaler for scaling features using statistics that are robust to outliers (median and interquartile range).|
+|`robust_scaler = RobustScaler()`|	Initializes the RobustScaler object.|
+|`scaled_data = robust_scaler.fit_transform(X)`|	Fits the RobustScaler to data X and transforms it.|
+|`from sklearn.preprocessing import Normalizer`|	Imports the Normalizer for scaling individual samples (rows) to unit norm (L1, L2, or max norm). Useful for text features or sparse data.|
+|`normalizer = Normalizer(norm='l2')`|	Initializes the Normalizer object, specifying the norm to use (e.g., 'l1', 'l2', 'max').|
+|`normalized_data = normalizer.fit_transform(X)`|	Normalizes each row of the input data X.|
+|`from sklearn.preprocessing import OneHotEncoder`|	Imports the OneHotEncoder for converting categorical (nominal) features into a one-hot numeric array.|
+|`encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)`|	Initializes the OneHotEncoder. handle_unknown='ignore' handles new categories seen during transform. sparse_output=False returns a dense array.|
+|`encoded_data = encoder.fit_transform(X_categorical)`|	Fits the encoder to categorical data X_categorical and transforms it.|
+|`encoded_test_data = encoder.transform(X_test_categorical)`|	Transforms new categorical data using the fitted encoder.|
+|`from sklearn.preprocessing import OrdinalEncoder`|	Imports the OrdinalEncoder for encoding categorical features as ordinal integers. Useful when there's an inherent order.|
+|`ordinal_encoder = OrdinalEncoder()`|	Initializes the OrdinalEncoder object.|
+|`ordinal_encoded_data = ordinal_encoder.fit_transform(X_categorical)`|	Fits the encoder to categorical data and transforms it into numerical ordinal values.|
+|`from sklearn.impute import SimpleImputer`|	Imports SimpleImputer for handling missing values.|
+|`imputer = SimpleImputer(strategy='mean')`|	Initializes the SimpleImputer. Common strategies: 'mean', 'median', 'most_frequent', 'constant'.|
+|`imputed_data = imputer.fit_transform(X_with_missing)`|	Fits the imputer to data X_with_missing (learning imputation values) and then fills missing values.|
+|`from sklearn.impute import KNNImputer`|	Imports KNNImputer for imputing missing values using the k-Nearest Neighbors approach.|
+|`knn_imputer = KNNImputer(n_neighbors=5)`|	Initializes the KNNImputer, specifying the number of neighbors to consider.|
+|`imputed_data = knn_imputer.fit_transform(X_with_missing)`|	Fills missing values in X_with_missing using the KNN imputation strategy.|
+|`from sklearn.preprocessing import PolynomialFeatures`|	Imports PolynomialFeatures for generating polynomial and interaction features.|
+|`poly = PolynomialFeatures(degree=2, include_bias=False)`|	Initializes PolynomialFeatures to create polynomial features up to a specified degree. include_bias=False avoids adding an intercept term.|
+|`poly_features = poly.fit_transform(X)`|	Generates polynomial features from the input data X.|
+|`from sklearn.feature_selection import SelectKBest, f_classif`|	Imports SelectKBest for selecting the top K features based on a scoring function (e.g., f_classif for classification, f_regression for regression).|
+|`selector = SelectKBest(f_classif, k=10)`|	Initializes the feature selector to pick the top 10 features using F-score for classification.|
+|`selected_features = selector.fit_transform(X, y)`|	Fits the selector to the data X and target y, then transforms X to include only the selected features.|
+|`from sklearn.decomposition import PCA`|	Imports PCA (Principal Component Analysis) for dimensionality reduction.|
+|`pca = PCA(n_components=2)`|	Initializes PCA to reduce dimensionality to 2 principal components.|
+|`X_pca = pca.fit_transform(X)`|	Fits PCA to the data and transforms it into the lower-dimensional space.|
+
+## 4. Supervised Learning: Classification Models
+
+> This section covers the standard way to bring the NumPy library into your Python scripts.
+
+|Command | description|
+|----------|-------------|
+|`from sklearn.linear_model import LogisticRegression`|	Imports the Logistic Regression classifier, a common linear model for binary and multi-class classification.|
+|`model = LogisticRegression(solver='liblinear', random_state=42)`|	Initializes a Logistic Regression model. solver specifies the algorithm for optimization; random_state ensures reproducibility.|
+|`from sklearn.tree import DecisionTreeClassifier`|	Imports the Decision Tree classifier, a non-parametric model that learns decision rules from data.|
+|`model = DecisionTreeClassifier(max_depth=5, random_state=42)`|	Initializes a Decision Tree classifier. max_depth limits the tree's depth to prevent overfitting.|
+|`from sklearn.ensemble import RandomForestClassifier`|	Imports the Random Forest classifier, an ensemble method that builds multiple decision trees and merges their predictions.|
+|`model = RandomForestClassifier(n_estimators=100, random_state=42)`|	Initializes a Random Forest classifier. n_estimators specifies the number of trees in the forest.|
+|`from sklearn.svm import SVC`|	Imports the Support Vector Classifier, a powerful model for both linear and non-linear classification.|
+|`model = SVC(kernel='rbf', C=1.0, random_state=42)`|	Initializes an SVC model. kernel specifies the kernel function (e.g., 'linear', 'poly', 'rbf'); C is the regularization parameter.|
+|`from sklearn.neighbors import KNeighborsClassifier`|	Imports the K-Nearest Neighbors classifier, a non-parametric, instance-based learning algorithm.|
+|`model = KNeighborsClassifier(n_neighbors=5)`|	Initializes a KNeighborsClassifier. n_neighbors specifies the number of neighbors to consider.|
+|`from sklearn.naive_bayes import GaussianNB`|	Imports the Gaussian Naive Bayes classifier, based on Bayes' theorem with a strong independence assumption.|
+|`model = GaussianNB()`|	Initializes a Gaussian Naive Bayes model.|
+|`from sklearn.ensemble import GradientBoostingClassifier`|	Imports the Gradient Boosting Classifier, an ensemble method that builds trees sequentially, with each tree correcting errors of the previous one.|
+|`model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, random_state=42)`|	Initializes a Gradient Boosting Classifier. n_estimators is the number of boosting stages; learning_rate shrinks the contribution of each tree.|
+|`from xgboost import XGBClassifier`|	Imports the XGBoost Classifier (requires xgboost installation), a highly efficient and popular gradient boosting framework.|
+|`model = XGBClassifier(n_estimators=100, use_label_encoder=False, eval_metric='logloss', random_state=42)`|	Initializes an XGBoost Classifier. n_estimators is the number of boosting rounds. use_label_encoder=False and eval_metric are often set to suppress warnings in newer versions.|
+|`model.fit(X_train, y_train)`|	Trains the classification model. X_train are the training features, y_train are the corresponding training labels.|
+|`predictions = model.predict(X_test)`|	Makes class predictions on new data X_test. Returns an array of predicted class labels.|
+|`probabilities = model.predict_proba(X_test)`|	Estimates class probabilities for new data X_test. Returns an array where each row sums to 1. (Not all models support this).|
+|`score = model.score(X_test, y_test)`|	Calculates the mean accuracy on the given test data and labels.|
+
+## 5. Supervised Learning: Regression Models
+
+> This section covers the standard way to bring the NumPy library into your Python scripts.
+
+|Command | description|
+|----------|-------------|
+|`from sklearn.linear_model import LinearRegression`|	Import Linear Regression: Imports the class for Ordinary Least Squares Linear Regression.|
+|`model = LinearRegression()`|	Instantiate Linear Regression: Creates a Linear Regression model object.|
+|`model.fit(X_train, y_train)`|	Train Model: Fits the regression model to the training data. X_train are features, y_train are target values.|
+|`y_pred = model.predict(X_test)`|	Make Predictions: Uses the trained model to make predictions on new (test) data X_test.|
+|`model.coef_`|	Coefficients: After fitting, returns the estimated coefficients for the features.|
+|`model.intercept_`|	Intercept: After fitting, returns the independent term in the linear model.|
+|`from sklearn.linear_model import Ridge`|	Import Ridge Regression: Imports the class for Ridge (L2 regularization) Regression, which helps prevent overfitting.|
+|`model = Ridge(alpha=1.0)`|	Instantiate Ridge Regression: Creates a Ridge Regression model. alpha is the regularization strength; higher values mean stronger regularization.|
+|`from sklearn.linear_model import Lasso`|	Import Lasso Regression: Imports the class for Lasso (L1 regularization) Regression, which can perform feature selection by shrinking coefficients to zero.|
+|`model = Lasso(alpha=1.0)`|	Instantiate Lasso Regression: Creates a Lasso Regression model. alpha is the regularization strength.|
+|`from sklearn.linear_model import ElasticNet|	Import Elastic Net Regression: Imports the class for Elastic Net Regression, which combines L1 and L2 regularization.|
+|`model = ElasticNet(alpha=1.0, l1_ratio=0.5)|	Instantiate Elastic Net: Creates an Elastic Net model. alpha is overall regularization, l1_ratio controls the mix of L1 (Lasso) and L2 (Ridge) penalties (0 for Ridge, 1 for Lasso).|
+|`from sklearn.preprocessing import PolynomialFeatures`|	Import Polynomial Features: Imports a transformer for generating polynomial and interaction features.|
+|`poly = PolynomialFeatures(degree=2, include_bias=False)`|	Instantiate Poly Features: Creates a transformer to convert features into polynomial terms (e.g., x1,x2,x1^2). degree specifies the maximum degree.|
+|`X_poly = poly.fit_transform(X)`|	Transform Data: Applies the polynomial transformation to the data.|
+|`from sklearn.tree import DecisionTreeRegressor`|	Import Decision Tree Regressor: Imports the class for Decision Tree-based regression.|
+|`model = DecisionTreeRegressor(max_depth=5, random_state=42)`|	Instantiate Decision Tree Regressor: Creates a Decision Tree Regressor. max_depth limits tree growth, random_state ensures reproducibility.|
+|`from sklearn.ensemble import RandomForestRegressor`|	Import Random Forest Regressor: Imports the class for Random Forest Regressor, an ensemble method using multiple decision trees.|
+|`model = RandomForestRegressor(n_estimators=100, random_state=42)`|	Instantiate Random Forest Regressor: Creates a Random Forest model. n_estimators is the number of trees in the forest.|
+|`from sklearn.ensemble import GradientBoostingRegressor`|	Import Gradient Boosting Regressor: Imports the class for Gradient Boosting Regressor, another powerful ensemble method.|
+|`model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)`|	Instantiate Gradient Boosting Regressor: Creates a Gradient Boosting model. n_estimators is the number of boosting stages, learning_rate controls the contribution of each tree.|
+|`from sklearn.svm import SVR`|	Import Support Vector Regressor: Imports the class for Support Vector Regressor.|
+|`model = SVR(kernel='rbf', C=1.0, epsilon=0.1)`|	Instantiate SVR: Creates an SVR model. kernel specifies the kernel type ('linear', 'poly', 'rbf'), C is the regularization parameter, epsilon is the epsilon-tube within which no penalty is associated in the training loss function.|
+|`from sklearn.neighbors import KNeighborsRegressor`|	Import K-Nearest Neighbors Regressor: Imports the class for K-Nearest Neighbors Regression.|
+|`model = KNeighborsRegressor(n_neighbors=5)`|	Instantiate KNeighborsRegressor: Creates a KNN Regressor. n_neighbors is the number of neighbors to consider.|
+
+## 6. Unsupervised Learning: Clustering Models
+
+> This section covers the standard way to bring the NumPy library into your Python scripts.
+
+|Command | description|
+|----------|-------------|
+|from sklearn.cluster import KMeans|	Import K-Means: Imports the K-Means clustering algorithm.|
+|model = KMeans(n_clusters=k, random_state=seed, ...)|	K-Means Initialization: Creates a K-Means model instance. n_clusters (k) is the number of clusters to form. random_state ensures reproducibility.|
+|model.fit(X)|	K-Means Fit: Fits the K-Means model to the data X. The algorithm iteratively assigns data points to clusters and updates cluster centroids.|
+|labels = model.predict(X_new)|	K-Means Predict: Predicts the cluster label for new data points X_new based on the fitted centroids.|
+|labels = model.fit_predict(X)|	K-Means Fit & Predict (Combined): Fits the model to X and returns the cluster labels for X in one step.|
+|centroids = model.cluster_centers_|	K-Means Centroids: After fitting, this attribute holds the coordinates of the cluster centroids.|
+|inertia = model.inertia_|	K-Means Inertia (WCSS): The sum of squared distances of samples to their closest cluster center (within-cluster sum of squares). Lower inertia usually means better clustering, but can be misleading for evaluating k.|
+|from sklearn.cluster import DBSCAN|	Import DBSCAN: Imports the DBSCAN (Density-Based Spatial Clustering of Applications with Noise) algorithm.|
+|model = DBSCAN(eps=0.5, min_samples=5, ...)|	DBSCAN Initialization: Creates a DBSCAN model instance. eps is the maximum distance between two samples for one to be considered as in the neighborhood of the other. min_samples is the number of samples (or total weight) in a neighborhood for a point to be considered as a core point.|
+|labels = model.fit_predict(X)|	DBSCAN Fit & Predict: Fits the DBSCAN model to X and returns the cluster labels for X. Noise points are assigned the label -1.|
+|core_samples_mask = np.zeros_like(model.labels_, dtype=bool)&lt;br>core_samples_mask[model.core_sample_indices_] = True	DBSCAN Core Samples: After fitting, model.core_sample_indices_ gives the indices of core samples. This helps identify the dense parts of clusters.
+|from sklearn.cluster import AgglomerativeClustering	Import Agglomerative Clustering: Imports hierarchical clustering that performs a bottom-up aggregation.
+|model = AgglomerativeClustering(n_clusters=k, linkage='ward', ...)	Agglomerative Clustering Initialization: Creates an instance. n_clusters is the number of clusters to find. linkage specifies the method used to calculate the distance between clusters ('ward', 'complete', 'average', 'single').|
+|labels = model.fit_predict(X)	Agglomerative Clustering Fit & Predict: Fits the model to X and returns the cluster labels.|
+|from sklearn.cluster import Birch	Import Birch: Imports the BIRCH (Balanced Iterative Reducing and Clustering using Hierarchies) algorithm, good for large datasets.|
+|model = Birch(n_clusters=k, threshold=0.5, branching_factor=50, ...)	Birch Initialization: Creates a Birch instance. n_clusters is the number of clusters. threshold is the maximum radius of the subcluster. branching_factor is the maximum number of CF subclusters in each node.|
+|labels = model.fit_predict(X)	Birch Fit & Predict: Fits the Birch model and returns cluster labels.|
+|from sklearn.cluster import MiniBatchKMeans	Import MiniBatchKMeans: Imports a variant of the K-Means algorithm that uses mini-batches to reduce computation time, especially for large datasets.|
+|model = MiniBatchKMeans(n_clusters=k, random_state=seed, batch_size=256, ...)	MiniBatchKMeans Initialization: Similar to K-Means, but batch_size determines the size of the mini-batches.|
+|labels = model.fit_predict(X)	MiniBatchKMeans Fit & Predict: Fits the model and returns cluster labels.|
+|from sklearn.cluster import SpectralClustering	Import Spectral Clustering: Imports a method that uses the eigenvalues of a similarity matrix for dimensionality reduction before clustering.|
+|model = SpectralClustering(n_clusters=k, affinity='rbf', ...)	Spectral Clustering Initialization: Creates an instance. affinity defines the similarity matrix (e.g., 'rbf', 'nearest_neighbors').|
+|labels = model.fit_predict(X)	Spectral Clustering Fit & Predict: Fits the model and returns cluster labels.|
+|from sklearn.metrics import silhouette_score	Import Silhouette Score: Imports a common metric to evaluate the quality of clustering results.|
+|score = silhouette_score(X, labels)	Silhouette Score Calculation: Computes the mean Silhouette Coefficient of all samples. A higher score indicates better-defined clusters. Range: -1 to 1.|
+|from sklearn.metrics import calinski_harabasz_score	Import Calinski-Harabasz Score: Imports a variance ratio criterion for clustering evaluation.|
+|score = calinski_harabasz_score(X, labels)	Calinski-Harabasz Score Calculation: Computes the score. A higher score relates to a model with better defined clusters.|
+|from sklearn.metrics import davies_bouldin_score	Import Davies-Bouldin Score: Imports a metric that evaluates the ratio of within-cluster scatter to between-cluster separation.|
+|score = davies_bouldin_score(X, labels)	Davies-Bouldin Score Calculation: Computes the score. A lower score relates to a model with better separation between clusters.|
+
+
+
